@@ -1,13 +1,8 @@
-import 'package:atlas_gen_demo/screens/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:atlas_gen_demo/Animation/FadeAnimation.dart';
 
-class LoginPage extends StatelessWidget {
-  void navigateToRegister(BuildContext ctx) {
-    Navigator.of(ctx).pushNamed(
-      RegisterPage.routeName,
-    );
-  }
+class RegisterPage extends StatelessWidget {
+  static const routeName = '/register';
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +17,7 @@ class LoginPage extends StatelessWidget {
                 margin: EdgeInsets.only(top: 50),
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('assets/images/login.png'),
+                    image: AssetImage('assets/images/register.png'),
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -30,17 +25,19 @@ class LoginPage extends StatelessWidget {
               Positioned(
                 child: FadeAnimation(
                     1.8,
-                    Container(
-                      margin: EdgeInsets.only(top: 10),
-                      child: Center(
-                        child: Text(
-                          "ورود به برنامه",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Color.fromRGBO(143, 148, 251, 1),
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'persianBold',
+                    InkWell(
+                      child: Container(
+                        margin: EdgeInsets.only(top: 10),
+                        child: Center(
+                          child: Text(
+                            "ثبت نام در برنامه",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Color.fromRGBO(143, 148, 251, 1),
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'persianBold',
+                            ),
                           ),
                         ),
                       ),
@@ -108,47 +105,32 @@ class LoginPage extends StatelessWidget {
                     ),
                     FadeAnimation(
                         2,
-                        InkWell(
-                          child: Container(
-                            height: 50,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              gradient: LinearGradient(
-                                colors: [
-                                  Color.fromRGBO(143, 148, 251, .4),
-                                  Color.fromRGBO(143, 148, 251, .8),
-                                ],
-                              ),
+                        Container(
+                          height: 50,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            gradient: LinearGradient(
+                              colors: [
+                                Color.fromRGBO(143, 148, 251, .4),
+                                Color.fromRGBO(143, 148, 251, .8),
+                              ],
                             ),
-                            child: Center(
-                              child: Text(
-                                "ورود به برنامه",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'persianBold',
-                                  fontSize: 18,
-                                ),
+                          ),
+                          child: Center(
+                            child: Text(
+                              "ثبت نام در برنامه",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'persianBold',
+                                fontSize: 18,
                               ),
                             ),
                           ),
                         )),
                     SizedBox(
-                      height: 40,
+                      height: 20,
                     ),
-                    FadeAnimation(
-                        1.5,
-                        InkWell(
-                          onTap: () => navigateToRegister(context),
-                          child: Text(
-                            "ثبت نام در برنامه",
-                            style: TextStyle(
-                              fontFamily: 'persianMedium',
-                              fontSize: 14,
-                              color: Color.fromRGBO(143, 148, 251, .6),
-                            ),
-                          ),
-                        )),
                   ],
                 ),
               )
