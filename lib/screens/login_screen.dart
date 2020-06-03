@@ -1,12 +1,70 @@
 import 'package:atlas_gen_demo/screens/register_screen.dart';
+import 'package:atlas_gen_demo/screens/users_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:atlas_gen_demo/Animation/FadeAnimation.dart';
+import 'package:flushbar/flushbar.dart';
+import '../models/user.dart';
+import 'package:atlas_gen_demo/data/storage/db_helper.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginScreen extends StatelessWidget {
+  static const routeName = '/login';
+
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
+
   void navigateToRegister(BuildContext ctx) {
     Navigator.of(ctx).pushNamed(
       RegisterScreen.routeName,
     );
+  }
+
+  validate(BuildContext ctx) async {
+    if (usernameController.text != "" && passwordController.text != "") {
+      final dbHelper = DBHelper();
+
+      User user = await dbHelper.checkLogin(
+          usernameController.text, passwordController.text);
+      if (user.username != "") {
+        navigateToUsersList(ctx);
+      }
+    } else {
+      showFlushBar(ctx, "خطا", "اطلاعات را وارد نمایید");
+    }
+  }
+
+  void navigateToUsersList(BuildContext ctx) {
+    Navigator.of(ctx).pushNamed(
+      UsersListScreen.routeName,
+    );
+  }
+
+  void showFlushBar(BuildContext context, String title, String text) {
+    Flushbar(
+      padding: EdgeInsets.all(10),
+      borderRadius: 8,
+      backgroundGradient: LinearGradient(
+        colors: [Colors.purple.shade800, Colors.purpleAccent.shade700],
+        stops: [0.6, 1],
+      ),
+      boxShadows: [
+        BoxShadow(
+          color: Colors.black,
+          offset: Offset(3, 3),
+          blurRadius: 3,
+        )
+      ],
+      dismissDirection: FlushbarDismissDirection.HORIZONTAL,
+      forwardAnimationCurve: Curves.fastLinearToSlowEaseIn,
+      titleText: Text(
+        title,
+        style: TextStyle(fontFamily: 'mainBold', color: Colors.white),
+      ),
+      messageText: Text(
+        text,
+        style: TextStyle(fontFamily: 'mainMedium', color: Colors.white),
+      ),
+      duration: Duration(seconds: 3),
+    ).show(context);
   }
 
   @override
@@ -70,7 +128,8 @@ class LoginPage extends StatelessWidget {
                                 border: Border(
                               bottom: BorderSide(color: Colors.grey[100]),
                             )),
-                            child: TextField(
+                            child: TextFormField(
+                              controller: usernameController,
                               textDirection: TextDirection.rtl,
                               textAlign: TextAlign.right,
                               decoration: InputDecoration(
@@ -86,7 +145,8 @@ class LoginPage extends StatelessWidget {
                           ),
                           Container(
                             padding: EdgeInsets.all(8.0),
-                            child: TextField(
+                            child: TextFormField(
+                              controller: passwordController,
                               textAlign: TextAlign.right,
                               textDirection: TextDirection.rtl,
                               decoration: InputDecoration(
@@ -109,6 +169,7 @@ class LoginPage extends StatelessWidget {
                     FadeAnimation(
                         2,
                         InkWell(
+                          onTap: () => validate(context),
                           child: Container(
                             height: 50,
                             decoration: BoxDecoration(

@@ -1,8 +1,62 @@
+import 'package:atlas_gen_demo/data/storage/db_helper.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:atlas_gen_demo/Animation/FadeAnimation.dart';
+import 'package:atlas_gen_demo/screens/login_screen.dart';
+import '../models/user.dart';
 
 class RegisterScreen extends StatelessWidget {
   static const routeName = '/register';
+
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  validate(BuildContext ctx) async {
+    if (usernameController.text != "" && passwordController.text != "") {
+      final dbHelper = DBHelper();
+      User user = User(null, null, null, usernameController.text,
+          passwordController.text, null, null, null);
+      await dbHelper.save(user);
+      navigateToRegister(ctx);
+    } else {
+      showFlushBar(ctx, "خطا", "اطلاعات را وارد نمایید");
+    }
+  }
+
+  void navigateToRegister(BuildContext ctx) {
+    Navigator.of(ctx).pushNamed(
+      LoginScreen.routeName,
+    );
+  }
+
+  void showFlushBar(BuildContext context, String title, String text) {
+    Flushbar(
+      padding: EdgeInsets.all(10),
+      borderRadius: 8,
+      backgroundGradient: LinearGradient(
+        colors: [Colors.purple.shade800, Colors.purpleAccent.shade700],
+        stops: [0.6, 1],
+      ),
+      boxShadows: [
+        BoxShadow(
+          color: Colors.black,
+          offset: Offset(3, 3),
+          blurRadius: 3,
+        )
+      ],
+      dismissDirection: FlushbarDismissDirection.HORIZONTAL,
+      forwardAnimationCurve: Curves.fastLinearToSlowEaseIn,
+      titleText: Text(
+        title,
+        style: TextStyle(fontFamily: 'mainBold', color: Colors.white),
+      ),
+      messageText: Text(
+        text,
+        style: TextStyle(fontFamily: 'mainMedium', color: Colors.white),
+      ),
+      duration: Duration(seconds: 3),
+    ).show(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,45 +113,55 @@ class RegisterScreen extends StatelessWidget {
                               offset: Offset(0, 10))
                         ],
                       ),
-                      child: Column(
-                        children: <Widget>[
-                          Container(
-                            padding: EdgeInsets.all(8.0),
-                            decoration: BoxDecoration(
-                                border: Border(
-                              bottom: BorderSide(color: Colors.grey[100]),
-                            )),
-                            child: TextField(
-                              textDirection: TextDirection.rtl,
-                              textAlign: TextAlign.right,
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: "نام کاربری",
-                                hintStyle: TextStyle(
-                                  color: Colors.grey[400],
-                                  fontFamily: 'persianMedium',
-                                  fontSize: 14,
+                      child: Form(
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              padding: EdgeInsets.all(8.0),
+                              decoration: BoxDecoration(
+                                  border: Border(
+                                bottom: BorderSide(color: Colors.grey[100]),
+                              )),
+                              child: TextFormField(
+                                controller: usernameController,
+                                textDirection: TextDirection.rtl,
+                                textAlign: TextAlign.right,
+                                // validator: (val) => val.length == 0
+                                //     ? 'نام کاربری را وارد نمایید.'
+                                //     : null,
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: "نام کاربری",
+                                  hintStyle: TextStyle(
+                                    color: Colors.grey[400],
+                                    fontFamily: 'persianMedium',
+                                    fontSize: 14,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.all(8.0),
-                            child: TextField(
-                              textAlign: TextAlign.right,
-                              textDirection: TextDirection.rtl,
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: "کلمه عبور",
-                                hintStyle: TextStyle(
-                                  color: Colors.grey[400],
-                                  fontFamily: 'persianMedium',
-                                  fontSize: 14,
+                            Container(
+                              padding: EdgeInsets.all(8.0),
+                              child: TextFormField(
+                                controller: passwordController,
+                                textAlign: TextAlign.right,
+                                textDirection: TextDirection.rtl,
+                                // validator: (val) => val.length == 0
+                                //     ? 'رمز عبور را وارد نمایید.'
+                                //     : null,
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: "کلمه عبور",
+                                  hintStyle: TextStyle(
+                                    color: Colors.grey[400],
+                                    fontFamily: 'persianMedium',
+                                    fontSize: 14,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -105,25 +169,28 @@ class RegisterScreen extends StatelessWidget {
                     ),
                     FadeAnimation(
                         2,
-                        Container(
-                          height: 50,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            gradient: LinearGradient(
-                              colors: [
-                                Color.fromRGBO(143, 148, 251, .4),
-                                Color.fromRGBO(143, 148, 251, .8),
-                              ],
+                        InkWell(
+                          onTap: () => validate(context),
+                          child: Container(
+                            height: 50,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              gradient: LinearGradient(
+                                colors: [
+                                  Color.fromRGBO(143, 148, 251, .4),
+                                  Color.fromRGBO(143, 148, 251, .8),
+                                ],
+                              ),
                             ),
-                          ),
-                          child: Center(
-                            child: Text(
-                              "ثبت نام در برنامه",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'persianBold',
-                                fontSize: 18,
+                            child: Center(
+                              child: Text(
+                                "ثبت نام در برنامه",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'persianBold',
+                                  fontSize: 18,
+                                ),
                               ),
                             ),
                           ),

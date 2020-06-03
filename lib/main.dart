@@ -1,4 +1,5 @@
 import 'package:atlas_gen_demo/screens/register_screen.dart';
+import 'package:atlas_gen_demo/screens/users_list_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import './screens/login_screen.dart';
@@ -9,8 +10,10 @@ void main() => runApp(MaterialApp(
     ));
 
 final routes = {
-  '/': (ctx) => LoginPage(),
+  '/': (ctx) => LoginScreen(),
   RegisterScreen.routeName: (ctx) => RegisterScreen(),
+  LoginScreen.routeName: (ctx) => LoginScreen(),
+  UsersListScreen.routeName: (ctx) => UsersListScreen(),
 };
 
 class MyApp extends StatelessWidget {
