@@ -8,6 +8,11 @@ void main() => runApp(MaterialApp(
       home: MyApp(),
     ));
 
+final routes = {
+  '/': (ctx) => LoginPage(),
+  RegisterScreen.routeName: (ctx) => RegisterScreen(),
+};
+
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
@@ -31,10 +36,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       initialRoute: '/',
-      routes: {
-        '/': (ctx) => LoginPage(),
-        RegisterPage.routeName: (ctx) => RegisterPage(),
-      },
+      routes: routes,
     );
   }
 }

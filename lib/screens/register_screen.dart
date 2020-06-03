@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:atlas_gen_demo/Animation/FadeAnimation.dart';
 
-class RegisterPage extends StatelessWidget {
+class RegisterScreen extends StatelessWidget {
   static const routeName = '/register';
 
   @override
