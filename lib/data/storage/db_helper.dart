@@ -48,19 +48,12 @@ class DBHelper {
 
   Future<List<User>> getUsers() async {
     var dbClient = await db;
-    List<Map> maps = await dbClient.query(USER_TABLE, columns: [
-      ID,
-      NAME,
-      FAMILY,
-      USERNAME,
-      PASSWORD,
-      BIRTHDAY,
-      MOBILE,
-      NATIONAL_ID
-    ]);
+
+    List<Map> maps =
+        await dbClient.query(USER_TABLE, columns: [ID, USERNAME, NATIONAL_ID]);
+    //List<Map> maps = await dbClient.rawQuery("SELECT * FROM $USER_TABLE");
 
     List<User> users = [];
-
     if (maps.length > 0) {
       for (int i = 0; i < maps.length; i++) {
         users.add(User.fromMap(maps[i]));
