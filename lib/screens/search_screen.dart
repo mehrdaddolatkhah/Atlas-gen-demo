@@ -11,6 +11,7 @@ class SearchScreen extends StatelessWidget {
   void showFlushBar(BuildContext context, String title, String text) {
     Flushbar(
       padding: EdgeInsets.all(10),
+      margin: EdgeInsets.all(10),
       borderRadius: 8,
       backgroundGradient: LinearGradient(
         colors: [Colors.purple.shade800, Colors.purpleAccent.shade700],
@@ -28,10 +29,12 @@ class SearchScreen extends StatelessWidget {
       titleText: Text(
         title,
         style: TextStyle(fontFamily: 'mainBold', color: Colors.white),
+        textAlign: TextAlign.right,
       ),
       messageText: Text(
         text,
         style: TextStyle(fontFamily: 'mainMedium', color: Colors.white),
+        textAlign: TextAlign.right,
       ),
       duration: Duration(seconds: 3),
     ).show(context);
@@ -43,6 +46,10 @@ class SearchScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text('جستجو میان کاربران'),
+         leading: new IconButton(
+          icon: new Icon(Icons.arrow_back),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
       ),
       body: SingleChildScrollView(
         child: Container(

@@ -45,7 +45,7 @@ class _UsersListScreenState extends State<UsersListScreen> {
             label: Text('نام کاربری'),
           ),
           DataColumn(
-            label: Text('id'),
+            label: Text('شناسه'),
           ),
         ],
         rows: users
@@ -111,6 +111,7 @@ class _UsersListScreenState extends State<UsersListScreen> {
   void showFlushBar(BuildContext context, String title, String text) {
     Flushbar(
       padding: EdgeInsets.all(10),
+      margin: EdgeInsets.all(10),
       borderRadius: 8,
       backgroundGradient: LinearGradient(
         colors: [Colors.purple.shade800, Colors.purpleAccent.shade700],
@@ -128,10 +129,12 @@ class _UsersListScreenState extends State<UsersListScreen> {
       titleText: Text(
         title,
         style: TextStyle(fontFamily: 'mainBold', color: Colors.white),
+        textAlign: TextAlign.right,
       ),
       messageText: Text(
         text,
         style: TextStyle(fontFamily: 'mainMedium', color: Colors.white),
+        textAlign: TextAlign.right,
       ),
       duration: Duration(seconds: 3),
     ).show(context);
@@ -177,7 +180,7 @@ class _UsersListScreenState extends State<UsersListScreen> {
           children: <Widget>[
             Container(
               height: 250,
-              margin: EdgeInsets.only(top: 50),
+              margin: EdgeInsets.only(top: 20),
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('assets/images/users_list.png'),

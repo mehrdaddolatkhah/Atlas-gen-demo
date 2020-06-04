@@ -24,6 +24,10 @@ class LoginScreen extends StatelessWidget {
 
       User user = await dbHelper.checkLogin(
           usernameController.text, passwordController.text);
+
+      if (user == null) {
+        showFlushBar(ctx, "خطا", "نام کاربری یافت نشد");
+      }
       if (user.username != "") {
         navigateToUsersList(ctx);
       }
@@ -41,6 +45,7 @@ class LoginScreen extends StatelessWidget {
   void showFlushBar(BuildContext context, String title, String text) {
     Flushbar(
       padding: EdgeInsets.all(10),
+      margin: EdgeInsets.all(10),
       borderRadius: 8,
       backgroundGradient: LinearGradient(
         colors: [Colors.purple.shade800, Colors.purpleAccent.shade700],
@@ -58,10 +63,12 @@ class LoginScreen extends StatelessWidget {
       titleText: Text(
         title,
         style: TextStyle(fontFamily: 'mainBold', color: Colors.white),
+        textAlign: TextAlign.right,
       ),
       messageText: Text(
         text,
         style: TextStyle(fontFamily: 'mainMedium', color: Colors.white),
+        textAlign: TextAlign.right,
       ),
       duration: Duration(seconds: 3),
     ).show(context);
