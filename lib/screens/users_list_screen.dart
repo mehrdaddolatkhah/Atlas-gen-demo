@@ -5,6 +5,7 @@ import '../models/user.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:atlas_gen_demo/screens/complete_user_information_screen.dart';
 import 'package:atlas_gen_demo/screens/show_user_details.dart';
+import 'package:atlas_gen_demo/screens/search_screen.dart';
 
 class UsersListScreen extends StatefulWidget {
   static const routeName = '/users-list-screen';
@@ -143,10 +144,34 @@ class _UsersListScreenState extends State<UsersListScreen> {
     });
   }
 
+  void navigateToSearch(BuildContext ctx) {
+    Navigator.of(ctx).pushNamed(SearchScreen.routeName);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: Text('Atlas Gen Demo'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.search,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.of(context).pushNamed(
+                SearchScreen.routeName,
+              );
+            },
+          )
+        ],
+        leading: new IconButton(
+          icon: new Icon(Icons.ac_unit),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+      ),
       body: Container(
         child: Column(
           children: <Widget>[

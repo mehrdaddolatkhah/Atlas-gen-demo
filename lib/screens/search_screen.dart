@@ -1,13 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:atlas_gen_demo/Animation/FadeAnimation.dart';
+import 'package:atlas_gen_demo/screens/show_user_details.dart';
+import 'package:atlas_gen_demo/Animation/FadeAnimation.dart';
+import 'package:flushbar/flushbar.dart';
 
 class SearchScreen extends StatelessWidget {
   static const routeName = '/search';
+  final nationalIdController = TextEditingController();
+
+  void showFlushBar(BuildContext context, String title, String text) {
+    Flushbar(
+      padding: EdgeInsets.all(10),
+      borderRadius: 8,
+      backgroundGradient: LinearGradient(
+        colors: [Colors.purple.shade800, Colors.purpleAccent.shade700],
+        stops: [0.6, 1],
+      ),
+      boxShadows: [
+        BoxShadow(
+          color: Colors.black,
+          offset: Offset(3, 3),
+          blurRadius: 3,
+        )
+      ],
+      dismissDirection: FlushbarDismissDirection.HORIZONTAL,
+      forwardAnimationCurve: Curves.fastLinearToSlowEaseIn,
+      titleText: Text(
+        title,
+        style: TextStyle(fontFamily: 'mainBold', color: Colors.white),
+      ),
+      messageText: Text(
+        text,
+        style: TextStyle(fontFamily: 'mainMedium', color: Colors.white),
+      ),
+      duration: Duration(seconds: 3),
+    ).show(context);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: Text('جستجو میان کاربران'),
+      ),
       body: SingleChildScrollView(
         child: Container(
           child: Column(
@@ -17,7 +53,7 @@ class SearchScreen extends StatelessWidget {
                 margin: EdgeInsets.only(top: 50),
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('assets/images/register.png'),
+                    image: AssetImage('assets/images/search.png'),
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -30,11 +66,11 @@ class SearchScreen extends StatelessWidget {
                         margin: EdgeInsets.only(top: 10),
                         child: Center(
                           child: Text(
-                            "ثبت نام در برنامه",
+                            "جستجو براساس کد ملی",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Color.fromRGBO(143, 148, 251, 1),
-                              fontSize: 30,
+                              fontSize: 20,
                               fontWeight: FontWeight.bold,
                               fontFamily: 'persianBold',
                             ),
@@ -67,28 +103,13 @@ class SearchScreen extends StatelessWidget {
                                 border: Border(
                               bottom: BorderSide(color: Colors.grey[100]),
                             )),
-                            child: TextField(
+                            child: TextFormField(
+                              controller: nationalIdController,
                               textDirection: TextDirection.rtl,
                               textAlign: TextAlign.right,
                               decoration: InputDecoration(
                                 border: InputBorder.none,
-                                hintText: "نام کاربری",
-                                hintStyle: TextStyle(
-                                  color: Colors.grey[400],
-                                  fontFamily: 'persianMedium',
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.all(8.0),
-                            child: TextField(
-                              textAlign: TextAlign.right,
-                              textDirection: TextDirection.rtl,
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: "کلمه عبور",
+                                hintText: "کد ملی",
                                 hintStyle: TextStyle(
                                   color: Colors.grey[400],
                                   fontFamily: 'persianMedium',
@@ -105,25 +126,39 @@ class SearchScreen extends StatelessWidget {
                     ),
                     FadeAnimation(
                         2,
-                        Container(
-                          height: 50,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            gradient: LinearGradient(
-                              colors: [
-                                Color.fromRGBO(143, 148, 251, .4),
-                                Color.fromRGBO(143, 148, 251, .8),
-                              ],
+                        InkWell(
+                          onTap: () {
+                            if (nationalIdController.text != "") {
+                              Navigator.of(context).pushNamed(
+                                  ShowUserDetailsScreen.routeName,
+                                  arguments: {
+                                    'nationalId': nationalIdController.text,
+                                  });
+                            } else {
+                              showFlushBar(
+                                  context, "خطا", "کد ملی را وارد نمایید");
+                            }
+                          },
+                          child: Container(
+                            height: 50,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              gradient: LinearGradient(
+                                colors: [
+                                  Color.fromRGBO(143, 148, 251, .4),
+                                  Color.fromRGBO(143, 148, 251, .8),
+                                ],
+                              ),
                             ),
-                          ),
-                          child: Center(
-                            child: Text(
-                              "ثبت نام در برنامه",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'persianBold',
-                                fontSize: 18,
+                            child: Center(
+                              child: Text(
+                                "جستجو",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'persianBold',
+                                  fontSize: 18,
+                                ),
                               ),
                             ),
                           ),

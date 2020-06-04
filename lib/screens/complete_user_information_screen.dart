@@ -80,6 +80,9 @@ class CompleteUserInformationScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: Text('تکمیل مشخصات کاربر'),
+      ),
       body: SingleChildScrollView(
         child: Container(
           child: Column(

@@ -27,8 +27,16 @@ class ShowUserDetailsScreen extends StatelessWidget {
           }
 
           if (null == snapshot.data || snapshot.data.length == 0) {
-            return Text(
-              '"No Data Found',
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'کاربری با این کد ملی در سیستم وجود ندارد',
+                style: TextStyle(
+                  fontFamily: 'persianBold',
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                ),
+              ),
             );
           }
 
@@ -152,6 +160,9 @@ class ShowUserDetailsScreen extends StatelessWidget {
     getUserData(nationalId);
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: Text('مشخصات کاربر'),
+      ),
       body: SingleChildScrollView(
         child: Container(
           child: Column(
