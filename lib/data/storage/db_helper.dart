@@ -62,10 +62,15 @@ class DBHelper {
     return users;
   }
 
-  Future<dynamic> getUser(String nationalId) async {
-    final dbClient = await db;
-    return await dbClient.query(USER_TABLE,
-        where: "$NATIONAL_ID = ?", whereArgs: [nationalId], limit: 1);
+  Future<User> getUser(String nationalId) async {
+    var dbClient = await db;
+    var results = await dbClient.rawQuery(
+        'SELECT * FROM $USER_TABLE WHERE $NATIONAL_ID = \'$nationalId\'');
+    if (results.length > 0) {
+      return new User.fromMap(results.first);
+    }
+
+    return null;
   }
 
   Future<User> checkLogin(String userName, String password) async {

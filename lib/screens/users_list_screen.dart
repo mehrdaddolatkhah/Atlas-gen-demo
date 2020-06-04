@@ -4,6 +4,7 @@ import 'package:atlas_gen_demo/Animation/FadeAnimation.dart';
 import '../models/user.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:atlas_gen_demo/screens/complete_user_information_screen.dart';
+import 'package:atlas_gen_demo/screens/show_user_details.dart';
 
 class UsersListScreen extends StatefulWidget {
   static const routeName = '/users-list-screen';
@@ -66,6 +67,15 @@ class _UsersListScreenState extends State<UsersListScreen> {
                       ),
                     ],
                   ),
+                  onTap: () {
+                    if (user.nationalId != null) {
+                      Navigator.of(context).pushNamed(
+                          ShowUserDetailsScreen.routeName,
+                          arguments: {
+                            'nationalId': user.nationalId,
+                          });
+                    }
+                  },
                 ),
                 DataCell(Text(user.username)),
                 DataCell(Text(user.id.toString())),
@@ -82,7 +92,6 @@ class _UsersListScreenState extends State<UsersListScreen> {
         future: usersList,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            //showFlushBar(ctx, "test", snapshot.data);
             return dataTable(snapshot.data);
           }
 

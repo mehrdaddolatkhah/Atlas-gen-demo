@@ -17,33 +17,13 @@ class CompleteUserInformationScreen extends StatelessWidget {
   var id;
   var birthday;
 
-  // validate(BuildContext ctx, int id, String birthday) async {
-  //   if (nameController.text != "" &&
-  //       familyController.text != "" &&
-  //       nationalIdController.text != "" &&
-  //       mobileController.text != "") {
-  //     final dbHelper = DBHelper();
-  //     User user = User(id, nameController.text, familyController.text, null,
-  //         null, birthday, mobileController.text, nationalIdController.text);
-  //     await dbHelper.update(user);
-  //     navigateToUsersList(ctx);
-  //   } else {
-  //     showFlushBar(ctx, "خطا", "اطلاعات را وارد نمایید");
-  //   }
-  // }
-
   validate(BuildContext ctx) async {
     if (nameController.text != "" &&
         familyController.text != "" &&
         nationalIdController.text != "" &&
         mobileController.text != "") {
       final dbHelper = DBHelper();
-      print("useriddd: $id   birthdayyyy: ${birthday.toString()}");
 
-      //  await dbHelper.update(id, nameController.text, familyController.text,
-      //     birthday, mobileController.text, nationalIdController.text);
-
-      //Future<int> future =
       dbHelper.update(
           id.toString(),
           nameController.text,
@@ -51,7 +31,6 @@ class CompleteUserInformationScreen extends StatelessWidget {
           birthday.toString(),
           mobileController.text,
           nationalIdController.text);
-      //future.then((value) => (value) {}).catchError((error) => (error) {});
 
       navigateToUsersList(ctx);
     } else {

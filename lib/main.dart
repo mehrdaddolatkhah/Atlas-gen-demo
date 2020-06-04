@@ -1,6 +1,7 @@
 import 'package:atlas_gen_demo/screens/register_screen.dart';
 import 'package:atlas_gen_demo/screens/users_list_screen.dart';
 import 'package:atlas_gen_demo/screens/complete_user_information_screen.dart';
+import 'package:atlas_gen_demo/screens/show_user_details.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import './screens/login_screen.dart';
@@ -17,6 +18,7 @@ final routes = {
   UsersListScreen.routeName: (ctx) => UsersListScreen(),
   CompleteUserInformationScreen.routeName: (ctx) =>
       CompleteUserInformationScreen(),
+  ShowUserDetailsScreen.routeName: (ctx) => ShowUserDetailsScreen(),
 };
 
 class MyApp extends StatelessWidget {
@@ -27,8 +29,8 @@ class MyApp extends StatelessWidget {
       title: 'Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.pink,
-        accentColor: Colors.amber,
+        primarySwatch: Colors.purple,
+        accentColor: Colors.purple[700],
         canvasColor: Color.fromRGBO(255, 254, 229, 1),
         fontFamily: 'persianMain',
         textTheme: ThemeData.light().textTheme.copyWith(
