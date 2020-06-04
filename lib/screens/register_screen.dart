@@ -168,33 +168,34 @@ class RegisterScreen extends StatelessWidget {
                       height: 30,
                     ),
                     FadeAnimation(
-                        2,
-                        InkWell(
-                          onTap: () => validate(context),
-                          child: Container(
-                            height: 50,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              gradient: LinearGradient(
-                                colors: [
-                                  Color.fromRGBO(143, 148, 251, .4),
-                                  Color.fromRGBO(143, 148, 251, .8),
-                                ],
-                              ),
+                      2,
+                      InkWell(
+                        onTap: () => validate(context),
+                        child: Container(
+                          height: 50,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            gradient: LinearGradient(
+                              colors: [
+                                Color.fromRGBO(143, 148, 251, .4),
+                                Color.fromRGBO(143, 148, 251, .8),
+                              ],
                             ),
-                            child: Center(
-                              child: Text(
-                                "ثبت نام در برنامه",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'persianBold',
-                                  fontSize: 18,
-                                ),
+                          ),
+                          child: Center(
+                            child: Text(
+                              "ثبت نام در برنامه",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'persianBold',
+                                fontSize: 18,
                               ),
                             ),
                           ),
-                        )),
+                        ),
+                      ),
+                    ),
                     SizedBox(
                       height: 20,
                     ),

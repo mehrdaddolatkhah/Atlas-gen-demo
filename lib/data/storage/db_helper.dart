@@ -86,10 +86,17 @@ class DBHelper {
         .delete(USER_TABLE, where: '$nationalId = ?', whereArgs: [nationalId]);
   }
 
-  Future<int> update(User user) async {
+  // Future<int> update(String id, String name, String family, String birthday,
+  //     String mobile, String nationalId) async {
+  //   var dbClient = await db;
+  //   return await dbClient.rawUpdate(
+  //       'UPDATE $USER_TABLE SET $NAME = $name, $FAMILY = $family ,$BIRTHDAY = $birthday, $MOBILE = $mobile , $NATIONAL_ID = $nationalId WHERE $ID = $id');
+  // }
+  Future<int> update(String id, String name, String family, String birthday,
+      String mobile, String nationalId) async {
     var dbClient = await db;
-    return await dbClient.update(USER_TABLE, user.toMap(),
-        where: '$NATIONAL_ID = ?', whereArgs: [user.nationalId]);
+    return await dbClient.rawUpdate(
+        'UPDATE $USER_TABLE SET $NAME = \'$name\', $FAMILY = \'$family\' ,$BIRTHDAY = \'$birthday\', $MOBILE = \'$mobile\' , $NATIONAL_ID = \'$nationalId\' WHERE $ID = ${int.parse(id)}');
   }
 
   Future close() async {

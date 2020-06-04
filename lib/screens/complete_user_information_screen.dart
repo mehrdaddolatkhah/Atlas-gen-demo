@@ -1,11 +1,104 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:atlas_gen_demo/Animation/FadeAnimation.dart';
+import 'package:flutter/services.dart';
+import 'package:flushbar/flushbar.dart';
+import 'package:atlas_gen_demo/data/storage/db_helper.dart';
+import 'package:atlas_gen_demo/screens/users_list_screen.dart';
 
 class CompleteUserInformationScreen extends StatelessWidget {
   static const routeName = '/complete-user-information';
 
+  final nameController = TextEditingController();
+  final familyController = TextEditingController();
+  final nationalIdController = TextEditingController();
+  final mobileController = TextEditingController();
+
+  var id;
+  var birthday;
+
+  // validate(BuildContext ctx, int id, String birthday) async {
+  //   if (nameController.text != "" &&
+  //       familyController.text != "" &&
+  //       nationalIdController.text != "" &&
+  //       mobileController.text != "") {
+  //     final dbHelper = DBHelper();
+  //     User user = User(id, nameController.text, familyController.text, null,
+  //         null, birthday, mobileController.text, nationalIdController.text);
+  //     await dbHelper.update(user);
+  //     navigateToUsersList(ctx);
+  //   } else {
+  //     showFlushBar(ctx, "خطا", "اطلاعات را وارد نمایید");
+  //   }
+  // }
+
+  validate(BuildContext ctx) async {
+    if (nameController.text != "" &&
+        familyController.text != "" &&
+        nationalIdController.text != "" &&
+        mobileController.text != "") {
+      final dbHelper = DBHelper();
+      print("useriddd: $id   birthdayyyy: ${birthday.toString()}");
+
+      //  await dbHelper.update(id, nameController.text, familyController.text,
+      //     birthday, mobileController.text, nationalIdController.text);
+
+      //Future<int> future =
+      dbHelper.update(
+          id.toString(),
+          nameController.text,
+          familyController.text,
+          birthday.toString(),
+          mobileController.text,
+          nationalIdController.text);
+      //future.then((value) => (value) {}).catchError((error) => (error) {});
+
+      navigateToUsersList(ctx);
+    } else {
+      showFlushBar(ctx, "خطا", "اطلاعات را وارد نمایید");
+    }
+  }
+
+  void navigateToUsersList(BuildContext ctx) {
+    Navigator.of(ctx).pushNamed(
+      UsersListScreen.routeName,
+    );
+  }
+
+  void showFlushBar(BuildContext context, String title, String text) {
+    Flushbar(
+      padding: EdgeInsets.all(10),
+      borderRadius: 8,
+      backgroundGradient: LinearGradient(
+        colors: [Colors.purple.shade800, Colors.purpleAccent.shade700],
+        stops: [0.6, 1],
+      ),
+      boxShadows: [
+        BoxShadow(
+          color: Colors.black,
+          offset: Offset(3, 3),
+          blurRadius: 3,
+        )
+      ],
+      dismissDirection: FlushbarDismissDirection.HORIZONTAL,
+      forwardAnimationCurve: Curves.fastLinearToSlowEaseIn,
+      titleText: Text(
+        title,
+        style: TextStyle(fontFamily: 'mainBold', color: Colors.white),
+      ),
+      messageText: Text(
+        text,
+        style: TextStyle(fontFamily: 'mainMedium', color: Colors.white),
+      ),
+      duration: Duration(seconds: 3),
+    ).show(context);
+  }
+
   @override
   Widget build(BuildContext context) {
+    final dynamic rcvdData = ModalRoute.of(context).settings.arguments;
+    var userId = rcvdData['id'];
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -17,7 +110,7 @@ class CompleteUserInformationScreen extends StatelessWidget {
                 margin: EdgeInsets.only(top: 50),
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('assets/images/register.png'),
+                    image: AssetImage('assets/images/complete_profile.png'),
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -34,7 +127,7 @@ class CompleteUserInformationScreen extends StatelessWidget {
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Color.fromRGBO(143, 148, 251, 1),
-                              fontSize: 30,
+                              fontSize: 20,
                               fontWeight: FontWeight.bold,
                               fontFamily: 'persianBold',
                             ),
@@ -67,12 +160,13 @@ class CompleteUserInformationScreen extends StatelessWidget {
                                 border: Border(
                               bottom: BorderSide(color: Colors.grey[100]),
                             )),
-                            child: TextField(
+                            child: TextFormField(
+                              controller: nameController,
                               textDirection: TextDirection.rtl,
                               textAlign: TextAlign.right,
                               decoration: InputDecoration(
                                 border: InputBorder.none,
-                                hintText: "نام کاربری",
+                                hintText: "نام",
                                 hintStyle: TextStyle(
                                   color: Colors.grey[400],
                                   fontFamily: 'persianMedium',
@@ -83,12 +177,17 @@ class CompleteUserInformationScreen extends StatelessWidget {
                           ),
                           Container(
                             padding: EdgeInsets.all(8.0),
-                            child: TextField(
+                            decoration: BoxDecoration(
+                                border: Border(
+                              bottom: BorderSide(color: Colors.grey[100]),
+                            )),
+                            child: TextFormField(
+                              controller: familyController,
                               textAlign: TextAlign.right,
                               textDirection: TextDirection.rtl,
                               decoration: InputDecoration(
                                 border: InputBorder.none,
-                                hintText: "کلمه عبور",
+                                hintText: "نام خانوادگی",
                                 hintStyle: TextStyle(
                                   color: Colors.grey[400],
                                   fontFamily: 'persianMedium',
@@ -97,6 +196,69 @@ class CompleteUserInformationScreen extends StatelessWidget {
                               ),
                             ),
                           ),
+                          Container(
+                            padding: EdgeInsets.all(8.0),
+                            decoration: BoxDecoration(
+                                border: Border(
+                              bottom: BorderSide(color: Colors.grey[100]),
+                            )),
+                            child: TextFormField(
+                              controller: nationalIdController,
+                              textAlign: TextAlign.right,
+                              textDirection: TextDirection.rtl,
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintText: "کد ملی",
+                                hintStyle: TextStyle(
+                                  color: Colors.grey[400],
+                                  fontFamily: 'persianMedium',
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.all(8.0),
+                            decoration: BoxDecoration(
+                                border: Border(
+                              bottom: BorderSide(color: Colors.grey[100]),
+                            )),
+                            child: TextFormField(
+                              controller: mobileController,
+                              textAlign: TextAlign.right,
+                              inputFormatters: [
+                                WhitelistingTextInputFormatter.digitsOnly
+                              ],
+                              textDirection: TextDirection.rtl,
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintText: "09123456789",
+                                hintStyle: TextStyle(
+                                  color: Colors.grey[400],
+                                  fontFamily: 'persianMedium',
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                          ),
+                          FlatButton(
+                              onPressed: () {
+                                DatePicker.showDatePicker(context,
+                                    showTitleActions: true,
+                                    minTime: DateTime(1250, 1, 1),
+                                    maxTime: DateTime(1450, 12, 31),
+                                    onChanged: (date) {
+                                  print('change $date');
+                                }, onConfirm: (date) {
+                                  birthday = date;
+                                  print('confirm $date');
+                                },
+                                    currentTime: DateTime.now(),
+                                    locale: LocaleType.fa);
+                              },
+                              child: Text(
+                                'تاریخ تولد',
+                              )),
                         ],
                       ),
                     ),
@@ -104,8 +266,13 @@ class CompleteUserInformationScreen extends StatelessWidget {
                       height: 30,
                     ),
                     FadeAnimation(
-                        2,
-                        Container(
+                      2,
+                      InkWell(
+                        onTap: () => {
+                          id = userId,
+                          validate(context),
+                        },
+                        child: Container(
                           height: 50,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
@@ -118,7 +285,7 @@ class CompleteUserInformationScreen extends StatelessWidget {
                           ),
                           child: Center(
                             child: Text(
-                              "ثبت نام در برنامه",
+                              "تکمیل اطلاعات",
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
@@ -127,7 +294,9 @@ class CompleteUserInformationScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                        )),
+                        ),
+                      ),
+                    ),
                     SizedBox(
                       height: 20,
                     ),

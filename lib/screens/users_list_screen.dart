@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:atlas_gen_demo/Animation/FadeAnimation.dart';
 import '../models/user.dart';
 import 'package:flushbar/flushbar.dart';
+import 'package:atlas_gen_demo/screens/complete_user_information_screen.dart';
 
 class UsersListScreen extends StatefulWidget {
   static const routeName = '/users-list-screen';
@@ -14,6 +15,7 @@ class UsersListScreen extends StatefulWidget {
 class _UsersListScreenState extends State<UsersListScreen> {
   Future<List<User>> usersList;
   var dbHelper;
+  var selectedId;
 
   @override
   void initState() {
@@ -47,9 +49,24 @@ class _UsersListScreenState extends State<UsersListScreen> {
         rows: users
             .map(
               (user) => DataRow(cells: [
-                DataCell(Text(user.nationalId != null
-                    ? user.nationalId
-                    : "اطلاعات تکمیل نشده")),
+                DataCell(
+                  Row(
+                    children: <Widget>[
+                      IconButton(
+                        icon: Icon(Icons.edit),
+                        onPressed: () {
+                          selectedId = user.id;
+                          navigateToCompleteUserInformation(context);
+                        },
+                      ),
+                      Text(
+                        user.nationalId != null
+                            ? user.nationalId
+                            : "تکمیل نشده",
+                      ),
+                    ],
+                  ),
+                ),
                 DataCell(Text(user.username)),
                 DataCell(Text(user.id.toString())),
               ]),
@@ -108,6 +125,13 @@ class _UsersListScreenState extends State<UsersListScreen> {
       ),
       duration: Duration(seconds: 3),
     ).show(context);
+  }
+
+  void navigateToCompleteUserInformation(BuildContext ctx) {
+    Navigator.of(ctx)
+        .pushNamed(CompleteUserInformationScreen.routeName, arguments: {
+      'id': selectedId,
+    });
   }
 
   @override
