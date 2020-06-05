@@ -92,25 +92,23 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              Positioned(
-                child: FadeAnimation(
-                    1.8,
-                    Container(
-                      margin: EdgeInsets.only(top: 10),
-                      child: Center(
-                        child: Text(
-                          "ورود به برنامه",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Color.fromRGBO(143, 148, 251, 1),
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'persianBold',
-                          ),
+              FadeAnimation(
+                  1.8,
+                  Container(
+                    margin: EdgeInsets.only(top: 10),
+                    child: Center(
+                      child: Text(
+                        "ورود به برنامه",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Color.fromRGBO(143, 148, 251, 1),
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'persianBold',
                         ),
                       ),
-                    )),
-              ),
+                    ),
+                  )),
               Padding(
                 padding: EdgeInsets.all(30.0),
                 child: Column(
@@ -154,6 +152,7 @@ class LoginScreen extends StatelessWidget {
                             padding: EdgeInsets.all(8.0),
                             child: TextFormField(
                               controller: passwordController,
+                              obscureText: true,
                               textAlign: TextAlign.right,
                               textDirection: TextDirection.rtl,
                               decoration: InputDecoration(

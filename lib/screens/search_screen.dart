@@ -46,7 +46,7 @@ class SearchScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text('جستجو میان کاربران'),
-         leading: new IconButton(
+        leading: new IconButton(
           icon: new Icon(Icons.arrow_back),
           onPressed: () => Navigator.of(context).pop(),
         ),
@@ -56,8 +56,8 @@ class SearchScreen extends StatelessWidget {
           child: Column(
             children: <Widget>[
               Container(
-                height: 250,
-                margin: EdgeInsets.only(top: 50),
+                height: 200,
+                margin: EdgeInsets.only(top: 20),
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage('assets/images/search.png'),
@@ -65,27 +65,25 @@ class SearchScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              Positioned(
-                child: FadeAnimation(
-                    1.8,
-                    InkWell(
-                      child: Container(
-                        margin: EdgeInsets.only(top: 10),
-                        child: Center(
-                          child: Text(
-                            "جستجو براساس کد ملی",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Color.fromRGBO(143, 148, 251, 1),
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'persianBold',
-                            ),
+              FadeAnimation(
+                  1.8,
+                  InkWell(
+                    child: Container(
+                      margin: EdgeInsets.only(top: 10),
+                      child: Center(
+                        child: Text(
+                          "جستجو براساس کد ملی",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Color.fromRGBO(143, 148, 251, 1),
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'persianBold',
                           ),
                         ),
                       ),
-                    )),
-              ),
+                    ),
+                  )),
               Padding(
                 padding: EdgeInsets.all(30.0),
                 child: Column(

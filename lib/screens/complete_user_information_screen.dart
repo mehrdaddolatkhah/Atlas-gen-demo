@@ -104,27 +104,25 @@ class CompleteUserInformationScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              Positioned(
-                child: FadeAnimation(
-                    1.8,
-                    InkWell(
-                      child: Container(
-                        margin: EdgeInsets.only(top: 10),
-                        child: Center(
-                          child: Text(
-                            "تکمیل اطلاعات",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Color.fromRGBO(143, 148, 251, 1),
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'persianBold',
-                            ),
+              FadeAnimation(
+                  1.8,
+                  InkWell(
+                    child: Container(
+                      margin: EdgeInsets.only(top: 10),
+                      child: Center(
+                        child: Text(
+                          "تکمیل اطلاعات",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Color.fromRGBO(143, 148, 251, 1),
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'persianBold',
                           ),
                         ),
                       ),
-                    )),
-              ),
+                    ),
+                  )),
               Padding(
                 padding: EdgeInsets.all(30.0),
                 child: Column(

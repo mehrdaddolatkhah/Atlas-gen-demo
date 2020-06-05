@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:io' as io;
+import 'dart:io';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
@@ -29,7 +29,8 @@ class DBHelper {
   }
 
   initDb() async {
-    io.Directory documentDirectory = await getApplicationDocumentsDirectory();
+    //io.Directory documentDirectory = await getApplicationDocumentsDirectory();
+    Directory documentDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentDirectory.path, DB_NAME);
     var db = await openDatabase(path, version: 1, onCreate: _onCreate);
     return db;
